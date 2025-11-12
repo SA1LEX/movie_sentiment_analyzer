@@ -1046,9 +1046,14 @@ def model_info():
     })
 
 if __name__ == '__main__':
-    print("🚀 Запускаем Flask сервер с ML моделью...")
-    print("🔗 Тестовый URL: http://localhost:5000/test")
-    print("📊 Информация о модели: http://localhost:5000/model_info")
-    print("🎬 Сбор отзывов: http://localhost:5000/collect_reviews")
-    print("🔄 Переобучение: http://localhost:5000/retrain_with_real_data")
-    app.run(debug=True, port=5000)
+    # Получаем порт из переменной окружения (для хостингов)
+    port = int(os.environ.get('PORT', 5000))
+    
+    # В продакшене отключаем debug
+    debug_mode = os.environ.get('FLASK_ENV') != 'production'
+    
+    app.run(
+        host='0.0.0.0',  # Важно для хостингов!
+        port=port, 
+        debug=debug_mode
+    )
