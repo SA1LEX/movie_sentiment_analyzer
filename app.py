@@ -12,7 +12,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 # ==================== ПРОСТОЙ И ЭФФЕКТИВНЫЙ АНАЛИЗАТОР ====================
 
 def smart_sentiment_analyzer(text):
-    """АГРЕССИВНЫЙ анализатор с высокой точностью"""
+    """ИСПРАВЛЕННЫЙ анализатор с высокой точностью"""
     text_lower = text.lower().strip()
     
     if not text_lower or len(text_lower) < 3:
@@ -23,8 +23,8 @@ def smart_sentiment_analyzer(text):
         'великолепен', 'великолепный', 'великолепно', 'шедевр', 'блестящий', 
         'гениальный', 'восхитительный', 'идеальный', 'безупречный', 'незабываемый',
         'потрясающий', 'невероятный', 'фантастический', 'превосходно', 'совершенный',
-        'выдающийся', 'прекрасный', 'очаровательный', 'люблю', 'обожаю', 'обожаю',
-        'восторг', 'восторжен', 'восхищаюсь', 'нравится очень'
+        'выдающийся', 'прекрасный', 'очаровательный', 'люблю', 'обожаю',
+        'восторг', 'восторжен', 'восхищаюсь'
     ]
     
     strong_negative = [
@@ -134,7 +134,7 @@ def smart_sentiment_analyzer(text):
                 elif any(neg in next_word for neg in negative_words + strong_negative):
                     negative_score += 2
     
-    # АГРЕССИВНАЯ ЛОГИКА ПРИНЯТИЯ РЕШЕНИЯ
+    # ЛОГИКА ПРИНЯТИЯ РЕШЕНИЯ
     total_score = positive_score - negative_score
     
     # 1. ЛЮБОЙ позитивный сигнал → ПОЗИТИВНЫЙ
@@ -308,5 +308,6 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     debug_mode = os.environ.get('FLASK_ENV') != 'production'
     app.run(host='0.0.0.0', port=port, debug=debug_mode)
+
 
 
